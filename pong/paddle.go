@@ -1,12 +1,13 @@
 package pong
 
 import (
+	"image/color"
+	"strconv"
+
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/hajimehoshi/ebiten/text"
 	"golang.org/x/image/font"
-	"image/color"
-	"strconv"
 )
 
 // Paddle is a pong paddle
@@ -73,7 +74,7 @@ func (p *Paddle) Update(screen *ebiten.Image) {
 
 func (p *Paddle) AiUpdate(b *Ball) {
 	// unbeatable haha
-	p.Y = b.Y
+	p.Y = b.Position.Y
 }
 
 func (p *Paddle) Draw(screen *ebiten.Image, scoreFont font.Face) {

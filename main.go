@@ -71,10 +71,9 @@ func (g *Game) init() {
 		Position: pong.Position{
 			X: float32(windowWidth / 2),
 			Y: float32(windowHeight / 2)},
-		Radius:    pong.InitBallRadius,
-		Color:     pong.ObjColor,
-		XVelocity: initBallVelocity,
-		YVelocity: initBallVelocity,
+		Radius:   pong.InitBallRadius,
+		Color:    pong.ObjColor,
+		Velocity: pong.Velocity{X: initBallVelocity, Y: initBallVelocity},
 	}
 	g.level = 0
 	g.ball.Img, _ = ebiten.NewImage(int(g.ball.Radius*2), int(g.ball.Radius*2), ebiten.FilterDefault)
@@ -98,8 +97,7 @@ func (g *Game) reset(screen *ebiten.Image, state pong.GameState) {
 	g.player2.Position = pong.Position{
 		X: float32(w - pong.InitPaddleShift - pong.InitPaddleWidth), Y: pong.GetCenter(screen).Y}
 	g.ball.Position = pong.GetCenter(screen)
-	g.ball.XVelocity = initBallVelocity
-	g.ball.YVelocity = initBallVelocity
+	g.ball.Velocity = pong.Velocity{X: initBallVelocity, Y: initBallVelocity}
 }
 
 // Update updates the game state
@@ -116,12 +114,12 @@ func (g *Game) Update(screen *ebiten.Image) error {
 		g.player1.Update(screen)
 		g.player2.Update(screen)
 
-		xV := g.ball.XVelocity
+		xV := g.ball.Velocity.X
 		g.ball.Update(g.player1, g.player2, screen)
 		// rally count
-		if xV*g.ball.XVelocity < 0 {
+		if xV*g.ball.Velocity.X < 0 {
 			// score up when ball touches human player's paddle
-			if g.ball.X < float32(w/2) {
+			if g.ball.Position.X < float32(w/2) {
 				g.player1.Score++
 			}
 
@@ -130,17 +128,17 @@ func (g *Game) Update(screen *ebiten.Image) error {
 			// spice things up
 			if (g.rally)%speedUpdateCount == 0 {
 				g.level++
-				g.ball.XVelocity += speedIncrement
-				g.ball.YVelocity += speedIncrement
+				g.ball.Velocity.X += speedIncrement
+				g.ball.Velocity.Y += speedIncrement
 				g.player1.Speed += speedIncrement
 				g.player2.Speed += speedIncrement
 			}
 		}
 
-		if g.ball.X < 0 {
+		if g.ball.Position.X < 0 {
 			g.player2.Score++
 			g.reset(screen, pong.StartState)
-		} else if g.ball.X > float32(w) {
+		} else if g.ball.Position.X > float32(w) {
 			g.player1.Score++
 			g.reset(screen, pong.StartState)
 		}

@@ -1,12 +1,18 @@
 package pong
 
 import (
-	"github.com/hajimehoshi/ebiten"
 	"image/color"
+
+	"github.com/hajimehoshi/ebiten"
 )
 
 // Position is a set of coordinates in 2-D plan
 type Position struct {
+	X, Y float32
+}
+
+// Velocity is a set of coordinates in 2-D plan
+type Velocity struct {
 	X, Y float32
 }
 

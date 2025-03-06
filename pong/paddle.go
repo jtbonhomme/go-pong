@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
 )
@@ -21,7 +20,6 @@ type Paddle struct {
 	Up           ebiten.Key
 	Down         ebiten.Key
 	Img          *ebiten.Image
-	pressed      keysPressed
 	scorePrinted scorePrinted
 }
 
@@ -31,11 +29,6 @@ const (
 	InitPaddleShift  = 50
 )
 
-type keysPressed struct {
-	up   bool
-	down bool
-}
-
 type scorePrinted struct {
 	score   int
 	printed bool
@@ -44,22 +37,9 @@ type scorePrinted struct {
 }
 
 func (p *Paddle) Update(h int) {
-	if inpututil.IsKeyJustPressed(p.Up) {
-		p.pressed.down = false
-		p.pressed.up = true
-	} else if inpututil.IsKeyJustReleased(p.Up) || !ebiten.IsKeyPressed(p.Up) {
-		p.pressed.up = false
-	}
-	if inpututil.IsKeyJustPressed(p.Down) {
-		p.pressed.up = false
-		p.pressed.down = true
-	} else if inpututil.IsKeyJustReleased(p.Down) || !ebiten.IsKeyPressed(p.Down) {
-		p.pressed.down = false
-	}
-
-	if p.pressed.up {
+	if ebiten.IsKeyPressed(p.Up) {
 		p.Y -= p.Speed
-	} else if p.pressed.down {
+	} else if ebiten.IsKeyPressed(p.Down) {
 		p.Y += p.Speed
 	}
 

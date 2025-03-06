@@ -15,7 +15,7 @@ func (g *Game) Update() error {
 
 	case PlayState:
 		g.player1.Update(g.height)
-		g.player2.Update(g.height)
+		g.player2.AiUpdate(g.ball, g.height)
 
 		xV := g.ball.Velocity.X
 		g.ball.Update(g.player1, g.player2, g.height)

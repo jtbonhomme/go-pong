@@ -50,9 +50,18 @@ func (p *Paddle) Update(h int) {
 	}
 }
 
-func (p *Paddle) AiUpdate(b *Ball) {
-	// unbeatable haha
-	p.Y = b.Position.Y
+func (p *Paddle) AiUpdate(b *Ball, h int) {
+	if p.Y < b.Position.Y {
+		p.Y += p.Speed
+	} else if p.Y > b.Position.Y {
+		p.Y -= p.Speed
+	}
+
+	if p.Y-float32(p.Height/2) < 0 {
+		p.Y = float32(1 + p.Height/2)
+	} else if p.Y+float32(p.Height/2) > float32(h) {
+		p.Y = float32(h - p.Height/2 - 1)
+	}
 }
 
 func (p *Paddle) Draw(screen *ebiten.Image, scoreFont font.Face) {

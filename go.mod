@@ -1,4 +1,4 @@
-module github.com/jtestard/go-pong
+module github.com/jtbonhomme/go-pong
 
 go 1.12
 

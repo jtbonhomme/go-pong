@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
-	"github.com/jtestard/go-pong/pong"
+	"github.com/jtbonhomme/go-pong/pong"
 )
 
 // Game is the structure of the game state

@@ -4,9 +4,9 @@ import (
 	"image/color"
 	"strconv"
 
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/inpututil"
-	"github.com/hajimehoshi/ebiten/text"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
 )
 
@@ -43,9 +43,7 @@ type scorePrinted struct {
 	y       int
 }
 
-func (p *Paddle) Update(screen *ebiten.Image) {
-	_, h := screen.Size()
-
+func (p *Paddle) Update(h int) {
 	if inpututil.IsKeyJustPressed(p.Up) {
 		p.pressed.down = false
 		p.pressed.up = true
@@ -89,7 +87,7 @@ func (p *Paddle) Draw(screen *ebiten.Image, scoreFont font.Face) {
 		p.scorePrinted.printed = false
 	}
 	if p.scorePrinted.score == 0 && !p.scorePrinted.printed {
-		p.scorePrinted.x = int(p.X + (GetCenter(screen).X-p.X)/2)
+		p.scorePrinted.x = int(p.X + (GetCenter(screen.Size()).X-p.X)/2)
 		p.scorePrinted.y = int(2 * 30)
 	}
 	if (p.scorePrinted.score == 0 || p.scorePrinted.score != p.Score) && !p.scorePrinted.printed {

@@ -3,7 +3,7 @@ package pong
 import (
 	"image/color"
 
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // Ball is a pong ball
@@ -24,8 +24,7 @@ func setBallPixels(c color.Color, ballImg *ebiten.Image) {
 	ballImg.Fill(c)
 }
 
-func (b *Ball) Update(leftPaddle *Paddle, rightPaddle *Paddle, screen *ebiten.Image) {
-	_, h := screen.Size()
+func (b *Ball) Update(leftPaddle *Paddle, rightPaddle *Paddle, h int) {
 	b.Position.X += b.Velocity.X
 	b.Position.Y += b.Velocity.Y
 

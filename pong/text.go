@@ -1,14 +1,15 @@
 package pong
 
 import (
-	"github.com/golang/freetype/truetype"
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/examples/resources/fonts"
-	"github.com/hajimehoshi/ebiten/text"
-	"golang.org/x/image/font"
 	"image/color"
 	"log"
 	"math"
+
+	"github.com/golang/freetype/truetype"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
+	"github.com/hajimehoshi/ebiten/v2/text"
+	"golang.org/x/image/font"
 )
 
 const (
@@ -47,8 +48,8 @@ func DrawCaption(state GameState, color color.Color, screen *ebiten.Image) {
 		msg = append(msg, "Player 1: ↑ is UP, ↓ is Down\nPlayer 2: W is UP, S is Down")
 	}
 	for i, l := range msg {
-		n := len(l)*smallFontSize
-		x := int(math.Abs(float64(w - n)) / 2)
+		n := len(l) * smallFontSize
+		x := int(math.Abs(float64(w-n)) / 2)
 		text.Draw(screen, l, SmallArcadeFont, x, h-4+(i-2)*smallFontSize, color)
 	}
 }

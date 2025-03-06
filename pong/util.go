@@ -2,8 +2,6 @@ package pong
 
 import (
 	"image/color"
-
-	"github.com/hajimehoshi/ebiten"
 )
 
 // Position is a set of coordinates in 2-D plan
@@ -17,8 +15,7 @@ type Velocity struct {
 }
 
 // GetCenter returns the center position on screen
-func GetCenter(screen *ebiten.Image) Position {
-	w, h := screen.Size()
+func GetCenter(w, h int) Position {
 	return Position{
 		X: float32(w / 2),
 		Y: float32(h / 2),

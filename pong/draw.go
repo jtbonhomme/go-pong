@@ -3,12 +3,12 @@ package pong
 import (
 	"fmt"
 
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 // Draw updates the game screen elements drawn
-func (g *Game) Draw(screen *ebiten.Image) error {
+func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(BgColor)
 
 	DrawCaption(g.state, ObjColor, screen)
@@ -18,6 +18,4 @@ func (g *Game) Draw(screen *ebiten.Image) error {
 	g.ball.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f", ebiten.CurrentTPS()))
-
-	return nil
 }

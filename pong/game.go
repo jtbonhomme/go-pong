@@ -1,7 +1,7 @@
 package pong
 
 import (
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // Game is the structure of the game state
@@ -13,6 +13,8 @@ type Game struct {
 	rally    int
 	level    int
 	maxScore int
+	width    int
+	height   int
 }
 
 const (
@@ -29,7 +31,10 @@ const (
 
 // NewGame creates an initializes a new game
 func NewGame() *Game {
-	g := &Game{}
+	g := &Game{
+		width:  windowWidth,
+		height: windowHeight,
+	}
 	g.init()
 	return g
 }
@@ -71,15 +76,14 @@ func (g *Game) init() {
 		Velocity: Velocity{X: initBallVelocity, Y: initBallVelocity},
 	}
 	g.level = 0
-	g.ball.Img, _ = ebiten.NewImage(int(g.ball.Radius*2), int(g.ball.Radius*2), ebiten.FilterDefault)
-	g.player1.Img, _ = ebiten.NewImage(g.player1.Width, g.player1.Height, ebiten.FilterDefault)
-	g.player2.Img, _ = ebiten.NewImage(g.player2.Width, g.player2.Height, ebiten.FilterDefault)
+	g.ball.Img = ebiten.NewImage(int(g.ball.Radius*2), int(g.ball.Radius*2))
+	g.player1.Img = ebiten.NewImage(g.player1.Width, g.player1.Height)
+	g.player2.Img = ebiten.NewImage(g.player2.Width, g.player2.Height)
 
 	InitFonts()
 }
 
-func (g *Game) reset(screen *ebiten.Image, state GameState) {
-	w, _ := screen.Size()
+func (g *Game) reset(state GameState) {
 	g.state = state
 	g.rally = 0
 	g.level = 0
@@ -88,10 +92,10 @@ func (g *Game) reset(screen *ebiten.Image, state GameState) {
 		g.player2.Score = 0
 	}
 	g.player1.Position = Position{
-		X: InitPaddleShift, Y: GetCenter(screen).Y}
+		X: InitPaddleShift, Y: GetCenter(g.width, g.height).Y}
 	g.player2.Position = Position{
-		X: float32(w - InitPaddleShift - InitPaddleWidth), Y: GetCenter(screen).Y}
-	g.ball.Position = GetCenter(screen)
+		X: float32(g.width - InitPaddleShift - InitPaddleWidth), Y: GetCenter(g.width, g.height).Y}
+	g.ball.Position = GetCenter(g.width, g.height)
 	g.ball.Velocity = Velocity{X: initBallVelocity, Y: initBallVelocity}
 }
 
